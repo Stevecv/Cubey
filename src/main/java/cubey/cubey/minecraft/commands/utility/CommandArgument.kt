@@ -58,6 +58,6 @@ open class CommandArgument(
     }
 
     fun msg(s: String): String {
-        return data.msg(s);
+        return data.msg(s, true);
     }
 }
