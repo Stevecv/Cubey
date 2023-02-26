@@ -1,0 +1,10 @@
+name: Cubey
+version: '${project.version}'
+main: cubey.cubey.Cubey
+api-version: 1.19
+
+commands:
+  cubey:
+    description: cubey command
+    usage: /<command>
+    aliases: [cube, cu, c]
