@@ -1,10 +1,10 @@
 package cubey.cubey.minecraft.commands.utility
 
-import com.jeroenvdg.rounds.command.util.builders.*
-import com.jeroenvdg.rounds.utils.tryParseInt
-import net.md_5.bungee.api.chat.ClickEvent
-import net.md_5.bungee.api.chat.HoverEvent
-import net.md_5.bungee.api.chat.TextComponent
+import cubey.cubey.minecraft.commands.utility.builders.append
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.TextComponent
+import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.event.HoverEvent
 import org.bukkit.command.CommandSender
 import java.lang.Integer.max
 import java.lang.Integer.min
@@ -22,7 +22,7 @@ fun helpCommand(arg: CommandArgument, sender: CommandSender, args: Array<String>
     val name   = cmd.data.name
     val subCmd = args.copyOf(cmd.depth)
 
-    val index = max((if (args.size > cmd.depth+1) args[cmd.depth+1] else "1").tryParseInt() ?: 1, 1)
+    val index = max((if (args.size > cmd.depth+1) args[cmd.depth+1] else "1").toInt(), 1)
 
     val maxLength  = arg.data.maxHelpLineSize-3
     val skip       = (index-1) * maxLength
@@ -38,32 +38,25 @@ fun helpCommand(arg: CommandArgument, sender: CommandSender, args: Array<String>
 
     val subCmdArg = if (subCmd.isEmpty()) "" else " ${subCmd.joinToString(" ")}"
 
-    val comp = TextComponent()
-        .append(data.msg("&m---------------------------------------------\n"))
+    val comp = Component.text()
+        .append(Component.text(data.msg("&m---------------------------------------------\n")))
         .append(data.msg("/%p"))
-        .append(TextComponent(name + subCmdArg)
-            .setHoverText(data.msg("%rRun command %p/$name help", false))
-            .setCommand("/$name help"))
+        .append(Component.text(name + subCmdArg))
+//            .setHoverText(data.msg("%rRun command %p/$name help", false))
+//            .setCommand("/$name help"))
         .append("  ")
 
     //  Build the fancy pants arrow thingy
     if (pageCount > 1) {
-        val arrowComp1 = TextComponent("«")
-        arrowComp1.color      = if (index == 1) data.textColor else data.secondaryColor
-        arrowComp1.clickEvent = if (index == 1) null else ClickEvent(ClickEvent.Action.RUN_COMMAND, "/$name${subCmdArg} help ${index-1}")
-        arrowComp1.hoverEvent = if (index == 1) null else HoverEvent(HoverEvent.Action.SHOW_TEXT, arrayOf(TextComponent("${data.secondaryColor}Go to previous page.")))
-
-        val arrowComp2 = TextComponent("»")
-        arrowComp2.color      = if (index >= pageCount) data.textColor else data.secondaryColor
-        arrowComp2.clickEvent = if (index >= pageCount) null else ClickEvent(ClickEvent.Action.RUN_COMMAND, "/$name${subCmdArg} help ${index+1}")
-        arrowComp2.hoverEvent = if (index >= pageCount) null else HoverEvent(HoverEvent.Action.SHOW_TEXT, arrayOf(TextComponent("${data.secondaryColor}Go to next page.")))
+        val arrowComp1 = Component.text("«")
+        val arrowComp2 = Component.text("»")
 
         comp.append(arrowComp1)
             .append(data.msg(" %r$index/$pageCount ", false))
             .append(arrowComp2)
     }
 
-    comp.addExtra("\n")
+    comp.append("\n")
 
     //  Build the body of the message
 
@@ -71,31 +64,31 @@ fun helpCommand(arg: CommandArgument, sender: CommandSender, args: Array<String>
 
     for (i in skip until loopAmount) {
         if(i >= cmd.commands.size)
-            comp.addExtra(data.msg("\n"))
+            comp.append(data.msg("\n"))
 
         else {
             val char = chars[if (i == commandsThisPage) 2 else 0]
             val subName = cmd.commands[i].name
             val args = cmd.commands[i].arguments
 
-            if (args == "") comp.append(TextComponent(data.msg("  %r$char %p$subName %r- ${cmd.commands[i].description}\n"))
-                    .setHoverText(data.msg("%rRun command /%p$name$subCmdArg $subName", false))
-                    .setCommand("/$name$subCmdArg $subName"))
+            if (args == "") comp.append(Component.text(data.msg("  %r$char %p$subName %r- ${cmd.commands[i].description}\n")))
+//                    .setHoverText(data.msg("%rRun command /%p$name$subCmdArg $subName", false))
+//                    .setCommand("/$name$subCmdArg $subName"))
 
             //  Return default
-            else comp.append(TextComponent(data.msg("  %r$char %p$subName %s$args %r- ${cmd.commands[i].description}\n"))
-                    .setHoverText(data.msg("%rFill /%p$name$subCmdArg $subName %s${args}", false))
-                    .setSuggestion("/$name$subCmdArg $subName"))
+            else comp.append(Component.text(data.msg("  %r$char %p$subName %s$args %r- ${cmd.commands[i].description}\n")))
+//                    .setHoverText(data.msg("%rFill /%p$name$subCmdArg $subName %s${args}", false))
+//                    .setSuggestion("/$name$subCmdArg $subName"))
         }
     }
 
     //  Build the footer of the message
 
-    comp.addExtra(data.msg("&m---------------------------------------------"))
+    comp.append(data.msg("&m---------------------------------------------"))
 
     //  Send the message
 
-    sender.spigot().sendMessage(comp)
+    sender.sendMessage(comp);
 }
 
 
@@ -125,10 +118,9 @@ fun handleCommandGroup(arg: CommandArgument, sender: CommandSender, args: Array<
 
     //  Sending the help message
 
-    sender.spigot().sendMessage(TextComponent(data.msg("Subcommand %p$subCmd %rdoes not exist!\n$prefix Try /%p"))
-        .append(TextComponent("$name $b")
-            .setHoverText(data.msg("%rRun command /%p$name $b", false))
-            .setCommand("/$name $b")
-        )
+    sender.sendMessage(Component.text(data.msg("Subcommand %p$subCmd %rdoes not exist!\n$prefix Try /%p"))
+//        .append(Component.text("$name $b")
+//            .setHoverText(data.msg("%rRun command /%p$name $b", false))
+//            .setCommand("/$name $b")
     )
 }

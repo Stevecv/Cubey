@@ -1,17 +1,19 @@
 package cubey.cubey.minecraft.commands.utility
 
-import net.md_5.bungee.api.ChatColor
+import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 import kotlin.reflect.KFunction3
 
 typealias CommandAction = KFunction3<CommandArgument, CommandSender, Array<String>, Unit>
 
 
-class CommandData(
-    name: String,
-    description: String,
-    action: CommandAction = ::handleCommandGroup
-) : CommandArgument(name, "", description, 0, action) {
+class CommandData : CommandArgument {
+
+    constructor(name: String, description: String) : super(name, "", description, 0, ::handleCommandGroup) {
+    }
+
+    constructor(name: String, description: String, action: CommandAction) : super(name, "", description, 0, action) {
+    }
 
     var maxHelpLineSize: Int = 20
     var prefix = "%p[%sRounds%p]%r"
