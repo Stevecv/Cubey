@@ -1,19 +1,19 @@
 package cubey.cubey.general;
 
+import org.codehaus.plexus.util.FileUtils;
+
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Recipie {
     String path = null;
-    public Recipie(String path) {
+    public Recipie(String path) throws IOException {
         this.path = path;
     }
 
     Path p = Paths.get(path);
-
-    private String getCode() throws IOException {return Files.readString(p, StandardCharsets.UTF_8);}
-
+    File file = new File(path);
+    String code = FileUtils.fileRead(file);
 }
