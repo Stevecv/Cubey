@@ -1,18 +1,23 @@
 package cubey.cubey.minecraft;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
+import cubey.cubey.general.install.Install;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class Cubey implements CommandExecutor {
+import java.io.IOException;
+
+public final class Cubey extends JavaPlugin {
+
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args[0] == "compile") {
-            if (args.length > 1) {
+    public void onEnable() {
+        // Plugin startup logic
 
-            }
-        }
-        return true;
+        try { new Install().install(); } catch (IOException e) { throw new RuntimeException(e); }
+        Bukkit.getConsoleSender().sendMessage("Loaded Cubey");
+    }
+
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
     }
 }

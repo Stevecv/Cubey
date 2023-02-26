@@ -56,4 +56,8 @@ open class CommandArgument(
     fun build(): CommandData {
         return data
     }
+
+    fun msg(s: String): String {
+        return data.msg(s);
+    }
 }
