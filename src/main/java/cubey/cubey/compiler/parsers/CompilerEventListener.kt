@@ -5,4 +5,7 @@ import cubey.cubey.compiler.TopLeverParser
 
 class CompilerEventListener : TopLeverParser() {
     override val identifier = "listento"
+    override fun Parse() {
+        TODO("Not yet implemented")
+    }
 }
