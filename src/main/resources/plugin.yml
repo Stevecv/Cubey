@@ -2,6 +2,8 @@ name: Cubey
 version: '${project.version}'
 main: cubey.cubey.Cubey
 api-version: 1.19
+depend:
+  - kotlin-stdlib
 
 commands:
   cubey:
