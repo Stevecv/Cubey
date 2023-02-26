@@ -2,9 +2,6 @@ package cubey.cubey.minecraft.commands.utility
 
 import cubey.cubey.minecraft.commands.utility.builders.append
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.TextComponent
-import net.kyori.adventure.text.event.ClickEvent
-import net.kyori.adventure.text.event.HoverEvent
 import org.bukkit.command.CommandSender
 import java.lang.Integer.max
 import java.lang.Integer.min

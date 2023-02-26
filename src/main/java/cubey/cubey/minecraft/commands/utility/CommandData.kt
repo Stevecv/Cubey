@@ -16,7 +16,7 @@ class CommandData : CommandArgument {
     }
 
     var maxHelpLineSize: Int = 20
-    var prefix = "%p[%sRounds%p]%r"
+    var prefix = "%p[%sCubey%p]%r"
 
     override val data = this
 
@@ -36,7 +36,7 @@ class CommandData : CommandArgument {
     //region Chat colors
 
     var primaryColor   = ChatColor.WHITE
-    var secondaryColor = ChatColor.LIGHT_PURPLE
+    var secondaryColor = ChatColor.GOLD
     var textColor      = ChatColor.GRAY
     var errorColor     = ChatColor.RED
 
