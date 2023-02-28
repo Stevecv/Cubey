@@ -1,4 +1,4 @@
-package cubey.cubey.common.definers
+package cubey.cubey.general.definers
 
 interface ITopLevelDefiner {
     val identifier: String
